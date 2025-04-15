@@ -2,7 +2,14 @@ from builtins import str
 import pytest
 from pydantic import ValidationError
 from datetime import datetime
-from app.schemas.user_schemas import UserBase, UserCreate, UserUpdate, UserResponse, UserListResponse, LoginRequest
+from app.schemas.user_schemas import (
+    UserBase,
+    UserCreate,
+    UserUpdate,
+    UserResponse,
+    UserListResponse,
+    LoginRequest
+)
 
 # Tests for UserBase
 def test_user_base_valid(user_base_data):
@@ -25,8 +32,11 @@ def test_user_update_valid(user_update_data):
 # Tests for UserResponse
 def test_user_response_valid(user_response_data):
     user = UserResponse(**user_response_data)
-    assert user.id == user_response_data["id"]
-    # assert user.last_login_at == user_response_data["last_login_at"]
+    assert str(user.id) == user_response_data["id"]  # Fix: UUID vs str
+    assert user.email == user_response_data["email"]
+    assert user.first_name == user_response_data["first_name"]
+    assert user.nickname == user_response_data["nickname"]
+    # Optionally check datetime and enums if necessary
 
 # Tests for LoginRequest
 def test_login_request_valid(login_request_data):
@@ -60,10 +70,10 @@ def test_user_base_url_invalid(url, user_base_data):
     with pytest.raises(ValidationError):
         UserBase(**user_base_data)
 
-# Tests for UserBase
+# Invalid email test
 def test_user_base_invalid_email(user_base_data_invalid):
     with pytest.raises(ValidationError) as exc_info:
-        user = UserBase(**user_base_data_invalid)
-    
+        UserBase(**user_base_data_invalid)
+
     assert "value is not a valid email address" in str(exc_info.value)
     assert "john.doe.example.com" in str(exc_info.value)

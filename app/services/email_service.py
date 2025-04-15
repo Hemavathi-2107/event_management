@@ -26,7 +26,9 @@ class EmailService:
             raise ValueError("Invalid email type")
 
         html_content = self.template_manager.render_template(email_type, **user_data)
-        self.smtp_client.send_email(subject_map[email_type], html_content, user_data['email'])
+        
+        # Ensure that the send_email method is awaited
+        await self.smtp_client.send_email(subject_map[email_type], html_content, user_data['email'])
 
     async def send_verification_email(self, user: User):
         verification_url = f"{settings.server_base_url}verify-email/{user.id}/{user.verification_token}"
