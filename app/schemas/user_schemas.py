@@ -48,9 +48,22 @@ class UserCreate(UserBase):
         if domain not in allowed_domains:
             raise ValueError(f"Registration is only allowed from these domains: {', '.join(allowed_domains)}")
         return v
+    @validator("password")
+    def validate_password_strength(cls, v):
+        min_length = 8
+        if len(v) < min_length:
+            raise ValueError(f"Password must be at least {min_length} characters long")
+        if not re.search(r"[A-Z]", v):
+            raise ValueError("Password must contain at least one uppercase letter")
+        if not re.search(r"[a-z]", v):
+            raise ValueError("Password must contain at least one lowercase letter")
+        if not re.search(r"[0-9]", v):
+            raise ValueError("Password must contain at least one digit")
+        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", v):
+            raise ValueError("Password must contain at least one special character")
+        return v
 
 
-    
 class UserUpdate(UserBase):
     email: Optional[EmailStr] = Field(None, example="john.doe@example.com")
     nickname: Optional[str] = Field(None, min_length=3, pattern=r'^[\w-]+$', example="john_doe123")
