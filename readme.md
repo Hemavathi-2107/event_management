@@ -45,8 +45,6 @@ The email validation issue occurs when the system accepts improperly formatted e
 
 Issue Link: https://github.com/Hemavathi-2107/event_management/issues/5
 
-image
-
 5. Mismatched Data in Login and Register
 The issue arises due to inconsistency in the test data used for user registration and login. The user is registered with one password but attempts to log in using a different one, resulting in authentication failure. Ensuring the same credentials are used across both processes will resolve the mismatch.
 
