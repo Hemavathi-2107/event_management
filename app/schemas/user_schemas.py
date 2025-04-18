@@ -41,6 +41,14 @@ class UserCreate(UserBase):
     email: EmailStr = Field(..., example="john.doe@example.com")
     password: str = Field(..., example="Secure*1234")
 
+    @validator("email")
+    def validate_custom_email_domain(cls, v):
+        allowed_domains = ["gmail.com", "example.com"] 
+        domain = v.split("@")[-1]
+        if domain not in allowed_domains:
+            raise ValueError(f"Registration is only allowed from these domains: {', '.join(allowed_domains)}")
+        return v
+
 class UserUpdate(UserBase):
     email: Optional[EmailStr] = Field(None, example="john.doe@example.com")
     nickname: Optional[str] = Field(None, min_length=3, pattern=r'^[\w-]+$', example="john_doe123")
