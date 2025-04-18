@@ -14,13 +14,13 @@ STEP 3: Start the application using Docker
 
 STEP 4: Access Swagger UI at : localhost/docs
 
-![alt text](image.png)
-
 ![alt text](image-1.png)
+
+![alt text](image-2.png)
 
 STEP 5: Access PGAdmin at : localhost:5050
 
-![alt text](image-2.png)
+![alt text](image-3.png)
 
 
 ISSUES RESOLVED:
@@ -54,13 +54,13 @@ All fixes were tested and merged into the main branch using GitHub’s pull requ
 
 DOCKER DEPLOYMENT:
 
-![alt text](image-3.png)
-
 ![alt text](image-4.png)
+
+![alt text](image-5.png)
 
 TESTING:
 
-![alt text](image-5.png)
+![alt text](image-6.png)
 
 REFLECTIONS:
 
